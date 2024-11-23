@@ -5,7 +5,7 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import { Time } from "@/types/time"
-import { getTimes } from "@/api/api"
+import { Times } from "@/data/times"
 
 export const Table = () => {
 
@@ -19,19 +19,9 @@ export const Table = () => {
 
     // Fetch dos times quando o componente é montado
     useEffect(() => {
-        const fetchTimes = async () => {
-            try {
-                const data = await getTimes()
-                setTimes(data)
-            } catch (error) {
-                console.error("Erro ao buscar os times:", error)
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchTimes()
-    }, [])
+        // Carrega os times diretamente do arquivo local
+        setTimes(Times);
+      }, []);
 
 
     return (

@@ -11,8 +11,8 @@ import { ButtonSetor } from "@/components/ui/buttonSetor"
 import { Jogador } from "@/components/Jogador"
 import { CurrentTime } from "@/components/Time"
 import { motion } from "framer-motion"
-import { getTimes } from "../../api/api"
 import { Time } from "@/types/time"
+import { Times } from "@/data/times"
 
 type Setor = "ATAQUE" | "DEFESA" | "SPECIAL"
 
@@ -28,24 +28,24 @@ export default function Page() {
     const [selectedSetor, setSelectedSetor] = useState<Setor>((searchParams.get("setor") as Setor) || "ATAQUE")
 
     useEffect(() => {
-        // Buscar os times do backend e encontrar o time atual
-        async function fetchCurrentTeam() {
+        const fetchCurrentTeam = () => {
             try {
-                const teams = await getTimes()
-                const team = teams?.find(
-                    (t) => t.nome && t.nome.toLowerCase() === decodeURIComponent(timeName).toLowerCase()
+                // Busca o time diretamente no array de times
+                const team = Times.find(
+                    (t) =>
+                        t.nome?.toLowerCase() ===
+                        decodeURIComponent(timeName).toLowerCase()
                 );
-                setCurrentTeam(team || null)
+                setCurrentTeam(team || null);
             } catch (error) {
-                console.error("Erro ao buscar os times:", error)
+                console.error("Erro ao buscar os times:", error);
             } finally {
-                setLoading(false)
+                setLoading(false);
             }
-        }
+        };
 
-        fetchCurrentTeam()
-    }, [timeName])
-
+        fetchCurrentTeam();
+    }, [timeName]);
     useEffect(() => {
         setSelectedButton(searchParams.get("show") || "time")
         setSelectedSetor((searchParams.get("setor") as Setor) || "ATAQUE")

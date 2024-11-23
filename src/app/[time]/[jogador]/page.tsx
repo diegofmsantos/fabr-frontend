@@ -11,6 +11,7 @@ import { Stats } from '@/components/Stats'
 import { motion, AnimatePresence } from "framer-motion"
 import { useEffect, useState } from 'react'
 import { getJogadores, getTimes } from '@/api/api'
+import { Times } from '@/data/times'
 
 // Função para buscar o jogador por ID
 const findJogador = (jogadores: Jogador[], jogadorId: number): Jogador | null => {
@@ -26,32 +27,31 @@ export default function Page() {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const fetchJogador = async () => {
+        const fetchJogador = () => {
             try {
-                const jogadores = await getJogadores()
-                const jogadorEncontrado = jogadores.find((jogador: Jogador) => jogador.id === jogadorId)
-
-                if (jogadorEncontrado && jogadorEncontrado.timeId) {
-                    // Buscar o time completo associado ao jogador
-                    const times = await getTimes()
-                    const timeEncontrado = times.find((time) => time.id === jogadorEncontrado.timeId)
-
-                    if (timeEncontrado) {
+                // Percorrer os times para encontrar o jogador
+                for (const time of Times) {
+                    const jogadorEncontrado = time.jogadores?.find(
+                        (jogador) => jogador.id === jogadorId
+                    );
+                    if (jogadorEncontrado) {
                         setJogadorData({
                             jogador: jogadorEncontrado,
-                            time: timeEncontrado,
-                        })
+                            time,
+                        });
+                        break;
                     }
                 }
-                setLoading(false)
             } catch (error) {
-                console.error("Erro ao buscar os jogadores:", error)
-                setLoading(false)
+                console.error("Erro ao buscar os jogadores:", error);
+            } finally {
+                setLoading(false);
             }
-        }
+        };
 
-        fetchJogador()
-    }, [jogadorId])
+        fetchJogador();
+    }, [jogadorId]);
+
 
     if (loading) {
         return <div>Carregando...</div>
