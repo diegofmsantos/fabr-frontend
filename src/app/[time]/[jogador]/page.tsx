@@ -10,7 +10,6 @@ import Link from 'next/link'
 import { Stats } from '@/components/Stats'
 import { motion, AnimatePresence } from "framer-motion"
 import { useEffect, useState } from 'react'
-import { getJogadores, getTimes } from '@/api/api'
 import { Times } from '@/data/times'
 
 // Função para buscar o jogador por ID
@@ -101,14 +100,14 @@ export default function Page() {
                                     {currentJogador.posicao}
                                 </div>
                                 <div>
-                                    <Image src={`/assets/${currentJogador.nacionalidade}`} alt='logo-bandeira' width={40} height={40} quality={100} />
+                                    <Image src={`/assets/bandeiras/${currentJogador.nacionalidade}`} alt='logo-bandeira' width={40} height={40} quality={100} />
                                 </div>
                             </div>
                             <div className='-mt-5'>
                                 <Image src={logopath} alt='logo' width={100} height={100} quality={70} />
                             </div>
                         </div>
-                        <div className='flex justify-center items-center min-w-48 min-h-48 md:min-w-72 md:min-h-72 lg:min-w-84 lg:min-h-84 xl:min-w-96 xl:min-h-84'>
+                        <div className='flex justify-center items-center min-w-48 min-h-48 md:min-w-64 md:min-h-64 lg:min-w-84 lg:min-h-84 xl:min-w-96 xl:min-h-84'>
                             <Image
                                 src={camisasPath}
                                 alt={`${currentTime?.nome} camisa`}
@@ -116,7 +115,7 @@ export default function Page() {
                                 height={250}
                                 quality={100}
                                 priority
-                                className='w-auto h-auto'
+                                className=''
                             />
                         </div>
                     </div>

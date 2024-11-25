@@ -5,7 +5,6 @@ import { Jogador as JogadorType } from "@/types/jogador"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { getJogadores } from "@/api/api"
 
 type Props = {
     currentTeam: Time
@@ -64,8 +63,8 @@ export const Jogador = ({ currentTeam, selectedSetor }: Props) => {
                     <Link
                         href={`/${currentTeam.nome}/${jogador.id}`}
                         key={jogador.id}
-                        className="flex h-24 justify-between items-center p-4 rounded-md border text-sm 
-                            md:text-base xl:text-lg xl:max-w-[1200px] xl:min-w-[1100px] xl:m-auto transition duration-300"
+                        className="flex h-24 justify-between items-center p-4 rounded-md border text-sm bg-white 
+                        md:justify-around md:text-base xl:text-lg xl:max-w-[1200px] xl:min-w-[1100px] xl:m-auto transition duration-300"
                         style={{
                             transition: "background-color 0.3s",
                         }}
@@ -76,7 +75,7 @@ export const Jogador = ({ currentTeam, selectedSetor }: Props) => {
                             (e.currentTarget.style.backgroundColor = "#FFF")
                         }
                     >
-                        <div className="flex-1">
+                        <div className="">
                             <Image src={camisaPath} width={60} height={60} alt="Camisa" quality={100} className="w-auto h-auto" />
                         </div>
                         <div className="flex flex-col gap-3">

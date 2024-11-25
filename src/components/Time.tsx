@@ -1,6 +1,9 @@
+"use client"
+
 import { Time } from "@/types/time"
 import { differenceInYears, format } from "date-fns"
 import { ptBR } from "date-fns/locale"
+import Image from "next/image"
 import Link from "next/link"
 
 type Props = {
@@ -15,6 +18,8 @@ export const CurrentTime = ({ currentTeam }: Props) => {
     const fundacaoFormatada = currentTeam.fundacao
         ? format(fundacaoDate, "dd/MM/yyyy", { locale: ptBR })
         : "Data não disponível"
+
+    const bandeiraspath = `/assets/bandeiras/${currentTeam.bandeira_estado}`;
 
     return (
         <div className="p-4 flex flex-col gap-8 xl:max-w-[1200px] xl:min-w-[1100px] xl:m-auto">
@@ -37,8 +42,21 @@ export const CurrentTime = ({ currentTeam }: Props) => {
                     </div>
                     <div className="border-b border-black/40">
                         <div className="text-sm">CIDADE</div>
-                        <div className="text-lg font-extrabold italic mb-1">
-                            {currentTeam.cidade?.toUpperCase() ?? 'Cidade não disponível'}
+                        <div className="flex items-center gap-3">
+                            <div className="text-lg font-extrabold italic">
+                                {currentTeam.cidade?.toUpperCase() ?? 'Cidade não disponível'}
+                            </div>
+                            <div className="w-6 h-4">
+                                <Image
+                                    src={bandeiraspath}
+                                    alt="bandeira do estado"
+                                    width={40}
+                                    height={20}
+                                    quality={100} // Aumenta a qualidade da imagem
+                                    className="w-auto h-auto"
+                                />
+
+                            </div>
                         </div>
                     </div>
                     <div className="border-b border-black/40">
@@ -77,8 +95,14 @@ export const CurrentTime = ({ currentTeam }: Props) => {
                     </div>
                     <div className="border-b border-black/40">
                         <div className="text-sm">HEAD COACH</div>
-                        <div className="text-xl font-extrabold italic mb-1">
-                            {currentTeam.head_coach?.toUpperCase() ?? 'Não disponível'}
+                        <div className="text-lg font-extrabold italic underline text-blue-800">
+                            {currentTeam.instagram_coach ? (
+                                <Link href={currentTeam.instagram_coach} target="_blank">
+                                    {currentTeam.head_coach?.toUpperCase() ?? 'Não disponível'}
+                                </Link>
+                            ) : (
+                                'Instagram não disponível'
+                            )}
                         </div>
                     </div>
                     <div className="border-b border-black/40">

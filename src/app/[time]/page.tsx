@@ -153,7 +153,7 @@ export default function Page() {
                             />
                         </section>
                     </div>
-                    <div className="mt-[60px] xl:mt-[123px] xl:border">
+                    <div className="mt-[70px] xl:mt-[125px] xl:border bg-[#D9D9D9]/50">
                         <Jogador currentTeam={currentTeam} selectedSetor={selectedSetor} />
                     </div>
                 </motion.div>
